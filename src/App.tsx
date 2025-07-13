@@ -1,14 +1,18 @@
-import { Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import TaskList from './components/TaskList';
 import TaskDetails from './components/TaskDetails';
+import CreateTask from './components/CreateTask';
 
-const App = () => {
+function App() {
   return (
-    <Routes>
-      <Route path="/" element={<TaskList />} />
-      <Route path="/task/:id" element={<TaskDetails />} />
-    </Routes>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<TaskList />} />
+        <Route path="/task/:id" element={<TaskDetails />} />
+        <Route path="/create" element={<CreateTask />} />
+      </Routes>
+    </BrowserRouter>
   );
-};
+}
 
 export default App;

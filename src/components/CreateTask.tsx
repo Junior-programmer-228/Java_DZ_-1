@@ -1,37 +1,35 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useContext, useState } from 'react';
 import { TaskContext } from '../context/TaskContext';
-import { TextField, Button, MenuItem, Typography, Paper } from '@mui/material';
+import { TextField, Button, MenuItem } from '@mui/material';
 import type { Task } from '../types/task';
+import { v4 as uuidv4 } from 'uuid';
 
-const TaskDetails = () => {
-  const { id } = useParams();
+const CreateTask = () => {
+  const { addTask } = useContext(TaskContext)!;
   const navigate = useNavigate();
-  const context = useContext(TaskContext);
 
-  if (!context) return null;
-
-  const { tasks, updateTask } = context;
-
-  const task = tasks.find((t) => t.id === id);
-  const [form, setForm] = useState<Task | undefined>(task ? { ...task } : undefined);
-
-  if (!form) {
-    return <Typography variant="h6" style={{ padding: 20 }}>Задача не найдена</Typography>;
-  }
+  const [form, setForm] = useState<Task>({
+    id: '',
+    title: '',
+    description: '',
+    category: 'Feature',
+    status: 'To Do',
+    priority: 'Medium',
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSave = () => {
-    updateTask(form);
+  const handleSubmit = () => {
+    addTask({ ...form, id: uuidv4() });
     navigate('/');
   };
 
   return (
-    <Paper elevation={3} style={{ padding: 24, maxWidth: 600, margin: '40px auto' }}>
-      <Typography variant="h5" gutterBottom>Редактирование задачи</Typography>
+    <div style={{ padding: 20 }}>
+      <h2>Создать новую задачу</h2>
 
       <TextField
         label="Заголовок"
@@ -46,8 +44,6 @@ const TaskDetails = () => {
         name="description"
         fullWidth
         margin="normal"
-        multiline
-        minRows={3}
         value={form.description}
         onChange={handleChange}
       />
@@ -91,23 +87,16 @@ const TaskDetails = () => {
         ))}
       </TextField>
 
-      <div style={{ marginTop: 24 }}>
-        <Button
-          onClick={handleSave}
-          variant="contained"
-          color="primary"
-        >
-          Сохранить
+      <div style={{ marginTop: 20 }}>
+        <Button variant="contained" color="primary" onClick={handleSubmit}>
+          Создать
         </Button>
-        <Button
-          onClick={() => navigate('/')}
-          style={{ marginLeft: 12 }}
-        >
+        <Button onClick={() => navigate('/')} style={{ marginLeft: 10 }}>
           Отмена
         </Button>
       </div>
-    </Paper>
+    </div>
   );
 };
 
-export default TaskDetails;
+export default CreateTask;

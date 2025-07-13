@@ -1,52 +1,53 @@
-import { Card, CardContent, Typography, Chip, Button } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Card, CardContent, Typography, Chip, Button, CardActions } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import { useContext } from 'react';
+import { TaskContext } from '../context/TaskContext';
 import type { Task } from '../types/task';
 
-interface Props {
-  task: Task;
-}
+const TaskItem = ({ task }: { task: Task }) => {
+  const navigate = useNavigate();
+  const context = useContext(TaskContext);
 
-const categoryLabels: Record<string, string> = {
-  Bug: 'Баг',
-  Feature: 'Функция',
-  Documentation: 'Документация',
-  Refactor: 'Рефакторинг',
-  Test: 'Тест',
-};
+  if (!context) return null;
 
-const statusLabels: Record<string, string> = {
-  'To Do': 'К выполнению',
-  'In Progress': 'В процессе',
-  Done: 'Сделано',
-};
+  const { deleteTask } = context;
 
-const priorityLabels: Record<string, string> = {
-  Low: 'Низкий',
-  Medium: 'Средний',
-  High: 'Высокий',
-};
-
-const TaskItem = ({ task }: Props) => {
   return (
-    <Card style={{ margin: 10 }}>
+    <Card>
       <CardContent>
-        <Typography variant="h6">{task.title}</Typography>
-        <Typography variant="body2" color="textSecondary">
-          {task.description}
-        </Typography>
+        <Typography variant="h6" gutterBottom>{task.title}</Typography>
+        {task.description && (
+          <Typography variant="body2" color="text.secondary">
+            {task.description}
+          </Typography>
+        )}
 
         <div style={{ marginTop: 10, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-          <Chip label={categoryLabels[task.category]} color="primary" size="small" />
-          <Chip label={statusLabels[task.status]} color="secondary" size="small" />
-          <Chip label={priorityLabels[task.priority]} variant="outlined" size="small" />
-        </div>
-
-        <div style={{ marginTop: 10 }}>
-          <Button component={Link} to={`/task/${task.id}`} size="small">
-            Редактировать
-          </Button>
+          <Chip label={task.category} color="primary" size="small" />
+          <Chip label={task.status} color="secondary" size="small" />
+          <Chip label={task.priority} color="default" size="small" />
         </div>
       </CardContent>
+
+      <CardActions>
+        <Button
+          size="small"
+          startIcon={<EditIcon />}
+          onClick={() => navigate(`/task/${task.id}`)}
+        >
+          Редактировать
+        </Button>
+        <Button
+          size="small"
+          startIcon={<DeleteIcon />}
+          color="error"
+          onClick={() => deleteTask(task.id)}
+        >
+          Удалить
+        </Button>
+      </CardActions>
     </Card>
   );
 };
