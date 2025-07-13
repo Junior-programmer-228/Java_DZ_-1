@@ -1,69 +1,72 @@
-# React + TypeScript + Vite
+# 🗂 Task Manager — Веб-приложение для управления задачами
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# 🗒️ Описание
+Task Manager — это одностраничное (SPA) приложение, разработанное с использованием **React + TypeScript**, предназначенное для организации задач. Пользователи могут просматривать список задач, фильтровать их по статусу, категории и приоритету, а также редактировать и удалять задачи.
+---
+# 🛠️ Используемые технологии
 
-Currently, two official plugins are available:
+- *React* + *TypeScript*
+- *React Router v6* — маршрутизация
+- *Vite* — сборка проекта
+- *Material UI (MUI)* — UI-компоненты
+- *CSS-in-JS* (Emotion) — стилизация компонентов
+- *React Context API* — глобальное состояние задач
+- *uuid* — генерация уникальных идентификаторов
+---
+# 🛠 Установка и запуск проекта
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Клонируйте репозиторий
 
-## Expanding the ESLint configuration
+```bash
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+git clone https://github.com/Junior-programmer-228/Java_DZ_-1.git
+cd Java_DZ_-1
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+2. Установите зависимости
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+```bash
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+npm install
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+3. Запустите проект
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+npm run dev
+
+4. Откройте браузер и перейдите по адресу: http://localhost:5173
+
+# 💡 Основной функционал
+👁️ Просмотр списка задач
+
+- 🖼️ Главная страница — список задач  
+- 🖼️ Страница редактирования задачи
+- 🖼️ Страница редактирования задачи 
+
+✍️ Редактирование задач
+
+- 🔤 Изменение заголовка и описания задачи
+- 🏷️ Изменение категории: Bug, Feature, Documentation, Refactor, Test
+- 📊 Изменение статуса: To Do, In Progress, Done
+- 🎯 Изменение приоритета: Low, Medium, High
+- 💾 Сохранение изменений с возвращением на главную страницу
+- ❌ Отмена редактирования без сохранения
+
+🔗 Фильтрация по:
+
+- Статусу: To Do, In Progress, Done
+- Категории: Bug, Feature, Documentation, Refactor, Test
+- Приоритету: Low, Medium, High
+
+📱🖥🧩 Адаптивный дизайн (Grid-сетка)
+
+- Десктопы — удобная сетка карточек задач, оптимальная ширина элементов.
+- Мобильные устройства — компоненты автоматически перестраиваются в одну колонку.
+- Используется адаптивная сетка Grid из Material UI.
+- Компоненты отзывчивы благодаря использованию Box, Grid, Typography и sx-пропов от MUI.
+
+🗺️ Поддержка маршрутов:
+
+- / — главная страница со списком задач
+- /task/:id — страница редактирования выбранной задачи
+- /create — страница для создания новой задачи
